@@ -14,8 +14,8 @@ import com.ddmtchr.blpslab1.mapper.BookingMapper;
 import com.ddmtchr.blpslab1.repository.BookingRepository;
 import com.ddmtchr.blpslab1.repository.EstateRepository;
 import com.ddmtchr.blpslab1.security.entity.User;
-import com.ddmtchr.blpslab1.security.jwt.JwtUtils;
 import com.ddmtchr.blpslab1.security.repository.UserRepository;
+import com.ddmtchr.blpslab1.security.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,7 +31,6 @@ public class BookingService {
     private final BookingRepository repository;
     private final EstateRepository estateRepository;
     private final UserRepository userRepository;
-    private final JwtUtils jwtUtils;
 
     @Transactional
     public BookingResponseDto addBooking(BookingRequestDto dto) {
@@ -130,7 +129,7 @@ public class BookingService {
     @Transactional
     public void payForBooking(Long id) {
         Booking booking = this.repository.findById(id).orElseThrow(() -> new NotFoundException(String.format("Booking with id=%s was not found", id)));
-        String username = jwtUtils.getCurrentUser().getUsername();
+        String username = SecurityUtil.getCurrentUser().getUsername();
         User guest = this.userRepository.findByUsername(username).orElseThrow(() -> new NotFoundException(String.format("User with username=%s was not found", username)));
 
         checkGuestPermission(booking);
@@ -165,13 +164,13 @@ public class BookingService {
 
 
     private void checkHostPermission(Booking booking) {
-        if (!jwtUtils.getCurrentUser().getUsername().equals(booking.getEstate().getOwner().getUsername())) {
+        if (!booking.getEstate().getOwner().getUsername().equals(SecurityUtil.getCurrentUser().getUsername())) {
             throw new NoPermissionException(String.format("No permission to edit booking with id=%s", booking.getId()));
         }
     }
 
     private void checkGuestPermission(Booking booking) {
-        if (!jwtUtils.getCurrentUser().getUsername().equals(booking.getGuest().getUsername())) {
+        if (!booking.getGuest().getUsername().equals(SecurityUtil.getCurrentUser().getUsername())) {
             throw new NoPermissionException(String.format("No permission to edit booking with id=%s", booking.getId()));
         }
     }

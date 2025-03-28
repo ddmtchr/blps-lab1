@@ -27,6 +27,12 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.UNAUTHORIZED);
     }
 
+    @ExceptionHandler(NoAuthenticationException.class)
+    public ResponseEntity<String> handleNoAuthenticationException(NoAuthenticationException ex) {
+        ex.printStackTrace();
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.UNAUTHORIZED);
+    }
+
     @ExceptionHandler(UsernameAlreadyExistsException.class)
     public ResponseEntity<String> handleAlreadyExistsException(UsernameAlreadyExistsException ex) {
         return ResponseEntity.badRequest().body(ex.getMessage());

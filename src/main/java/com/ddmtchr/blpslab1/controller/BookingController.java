@@ -3,7 +3,7 @@ package com.ddmtchr.blpslab1.controller;
 import com.ddmtchr.blpslab1.dto.request.BookingChangesDto;
 import com.ddmtchr.blpslab1.dto.request.BookingRequestDto;
 import com.ddmtchr.blpslab1.dto.response.BookingResponseDto;
-import com.ddmtchr.blpslab1.security.jwt.JwtUtils;
+import com.ddmtchr.blpslab1.security.util.SecurityUtil;
 import com.ddmtchr.blpslab1.service.BookingService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +17,6 @@ import java.util.List;
 @RequestMapping("/bookings")
 @RequiredArgsConstructor
 public class BookingController {
-    private final JwtUtils jwtUtils;
     private final BookingService bookingService;
 
     @PostMapping
@@ -27,13 +26,13 @@ public class BookingController {
 
     @GetMapping("byHost")
     public ResponseEntity<List<BookingResponseDto>> findAllBookingsOfHost() {
-        String username = this.jwtUtils.getCurrentUser().getUsername();
+        String username = SecurityUtil.getCurrentUser().getUsername();
         return new ResponseEntity<>(this.bookingService.findAllByHost(username), HttpStatus.OK);
     }
 
     @GetMapping("byGuest")
     public ResponseEntity<List<BookingResponseDto>> findAllBookingsOfGuest() {
-        String username = this.jwtUtils.getCurrentUser().getUsername();
+        String username = SecurityUtil.getCurrentUser().getUsername();
         return new ResponseEntity<>(this.bookingService.findAllByGuest(username), HttpStatus.OK);
     }
 

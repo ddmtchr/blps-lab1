@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +20,7 @@ import java.util.stream.Collectors;
 @Transactional
 public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -30,9 +32,8 @@ public class UserService implements UserDetailsService {
         return userRepository.existsByUsername(username);
     }
 
-    @Transactional
     public User addUser(RegisterRequest request) {
-        User user = new User(request.getUsername(), request.getPassword(), request.getMoney());
+        User user = new User(request.getUsername(), passwordEncoder.encode(request.getPassword()), request.getMoney());
         Set<String> rolesString = request.getRoles();
         Set<Role> roles = rolesString.stream().map(Role::valueOf).collect(Collectors.toSet());
         user.setRoles(roles);

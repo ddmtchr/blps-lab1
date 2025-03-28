@@ -21,6 +21,6 @@ public class BookingResponseDto {
     private LocalDate startDate;
     private LocalDate endDate;
     private Long amount;
-    private LocalDateTime paymentRequestDate;
+    private LocalDateTime paymentRequestTime;
     private LocalDateTime payoutScheduledAt;
 }
