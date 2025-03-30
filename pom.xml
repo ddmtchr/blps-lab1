@@ -20,6 +20,7 @@
         <java.version>17</java.version>
         <spring.boot.version>3.4.2</spring.boot.version>
         <lombok.version>1.18.34</lombok.version>
+        <postgrsql.driver.version>42.7.5</postgrsql.driver.version>
         <mapstruct.version>1.5.5.Final</mapstruct.version>
     </properties>
     <dependencies>
@@ -45,9 +46,28 @@
         </dependency>
 
         <dependency>
+            <groupId>org.jboss.narayana.jta</groupId>
+            <artifactId>jdbc</artifactId>
+            <version>7.2.1.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.narayana.jta</groupId>
+            <artifactId>jms</artifactId>
+            <version>7.2.1.Final</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jboss.narayana.jta</groupId>
+            <artifactId>narayana-jta</artifactId>
+            <version>7.2.1.Final</version>
+            <scope>compile</scope>
+        </dependency>
+
+
+        <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <scope>runtime</scope>
+            <version>${postgrsql.driver.version}</version>
         </dependency>
 
         <dependency>

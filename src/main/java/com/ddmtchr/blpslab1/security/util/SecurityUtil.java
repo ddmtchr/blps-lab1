@@ -2,7 +2,6 @@ package com.ddmtchr.blpslab1.security.util;
 
 import com.ddmtchr.blpslab1.exception.NoAuthenticationException;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;

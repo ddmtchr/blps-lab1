@@ -162,7 +162,6 @@ public class BookingService {
     }
 
 
-
     private void checkHostPermission(Booking booking) {
         if (!booking.getEstate().getOwner().getUsername().equals(SecurityUtil.getCurrentUser().getUsername())) {
             throw new NoPermissionException(String.format("No permission to edit booking with id=%s", booking.getId()));
