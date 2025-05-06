@@ -1,5 +1,6 @@
 package com.ddmtchr.blpslab1.service;
 
+import com.ddmtchr.blpslab1.dto.producer.CheckDto;
 import com.ddmtchr.blpslab1.dto.request.BookingChangesDto;
 import com.ddmtchr.blpslab1.dto.request.BookingRequestDto;
 import com.ddmtchr.blpslab1.dto.response.BookingResponseDto;
@@ -16,6 +17,7 @@ import com.ddmtchr.blpslab1.repository.EstateRepository;
 import com.ddmtchr.blpslab1.security.entity.User;
 import com.ddmtchr.blpslab1.security.repository.UserRepository;
 import com.ddmtchr.blpslab1.security.util.SecurityUtil;
+import com.ddmtchr.blpslab1.service.producer.StompMessageSender;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,6 +33,8 @@ public class BookingService {
     private final BookingRepository repository;
     private final EstateRepository estateRepository;
     private final UserRepository userRepository;
+
+    private final StompMessageSender messageSender;
 
     @Transactional
     public BookingResponseDto addBooking(BookingRequestDto dto) {
@@ -145,6 +149,13 @@ public class BookingService {
         booking.setStatus(BookingStatus.PENDING_CHECK_IN);
         this.repository.save(booking);
         this.userRepository.save(guest);
+
+        this.messageSender.sendMessage(new CheckDto(
+                guest.getUsername(),
+                booking.getEstate().getName(),
+                amountToPay,
+                booking.getStartDate(),
+                booking.getEndDate()));
     }
 
     @Transactional
