@@ -1,0 +1,68 @@
+{
+  "bindings": [
+    {
+      "source": "blps-exchange",
+      "vhost": "/",
+      "destination": "checks.queue",
+      "destination_type": "queue",
+      "routing_key": "checks.queue"
+    }
+  ],
+  "permissions": [
+    {
+      "configure": ".*",
+      "read": ".*",
+      "user": "admin",
+      "vhost": "/",
+      "write": ".*"
+    }
+  ],
+  "queues": [
+    {
+      "name": "checks.queue",
+      "vhost": "/",
+      "durable": true
+    }
+  ],
+  "policies": [],
+  "parameters": [],
+  "rabbitmq_version": "4.1.0",
+  "rabbit_version": "4.1.0",
+  "exchanges": [
+    {
+      "name": "blps-exchange",
+      "vhost": "/",
+      "type": "topic",
+      "durable": true
+    }
+  ],
+  "vhosts": [
+    {
+      "default_queue_type": "classic",
+      "limits": [],
+      "metadata": {
+        "description": "Default virtual host",
+        "tags": []
+      },
+      "name": "/"
+    }
+  ],
+  "users": [
+    {
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "limits": {},
+      "name": "admin",
+      "password_hash": "3XBfAw1oWC77hdEMNHOpfEC/TuNtRx0vymFcwNbMLBjgtQ3u",
+      "tags": [
+        "administrator"
+      ]
+    }
+  ],
+  "global_parameters": [
+    {
+      "name": "cluster_tags",
+      "value": []
+    }
+  ],
+  "topic_permissions": []
+}
