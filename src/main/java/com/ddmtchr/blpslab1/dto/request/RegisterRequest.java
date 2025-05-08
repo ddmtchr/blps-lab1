@@ -2,6 +2,7 @@ package com.ddmtchr.blpslab1.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,6 +20,10 @@ public class RegisterRequest {
     @NotBlank
     @Size(min = 6)
     private String password;
+
+    @NotBlank
+    @Pattern(regexp = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")
+    private String email;
 
     @NotNull
     private Long money;

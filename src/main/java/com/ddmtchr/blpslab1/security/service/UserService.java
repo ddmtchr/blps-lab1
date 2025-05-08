@@ -33,7 +33,7 @@ public class UserService implements UserDetailsService {
     }
 
     public User addUser(RegisterRequest request) {
-        User user = new User(request.getUsername(), passwordEncoder.encode(request.getPassword()), request.getMoney());
+        User user = new User(request.getUsername(), passwordEncoder.encode(request.getPassword()), request.getEmail(), request.getMoney());
         Set<String> rolesString = request.getRoles();
         Set<Role> roles = rolesString.stream().map(Role::valueOf).collect(Collectors.toSet());
         user.setRoles(roles);

@@ -3,6 +3,7 @@ package com.ddmtchr.blpslab1.security.entity;
 import com.ddmtchr.blpslab1.security.model.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -39,12 +40,17 @@ public class User implements UserDetails {
     @Column(name = "role")
     private Set<Role> roles = new HashSet<>();
 
+    @Pattern(regexp = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")
+    @Column(nullable = false)
+    private String email;
+
     @Column(nullable = false)
     private Long money;
 
-    public User(String username, String password, Long money) {
+    public User(String username, String password, String email, Long money) {
         this.username = username;
         this.password = password;
+        this.email = email;
         this.money = money;
     }
 

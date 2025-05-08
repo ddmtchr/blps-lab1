@@ -19,6 +19,7 @@ public class CheckDto {
     private String guest;
     private String estate;
     private Long amount;
+    private String email;
 
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)

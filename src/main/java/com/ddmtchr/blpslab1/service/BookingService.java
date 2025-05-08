@@ -154,6 +154,7 @@ public class BookingService {
                 guest.getUsername(),
                 booking.getEstate().getName(),
                 amountToPay,
+                guest.getEmail(),
                 booking.getStartDate(),
                 booking.getEndDate()));
     }
