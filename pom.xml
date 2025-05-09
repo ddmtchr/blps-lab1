@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.4.2</version>
+        <version>3.4.5</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -18,10 +18,11 @@
 
     <properties>
         <java.version>17</java.version>
-        <spring.boot.version>3.4.2</spring.boot.version>
+        <spring.boot.version>3.4.5</spring.boot.version>
         <lombok.version>1.18.34</lombok.version>
         <postgrsql.driver.version>42.7.5</postgrsql.driver.version>
         <mapstruct.version>1.5.5.Final</mapstruct.version>
+        <flyway.version>11.8.1</flyway.version>
     </properties>
     <dependencies>
         <dependency>
@@ -49,6 +50,24 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-websocket</artifactId>
             <version>${spring.boot.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-quartz</artifactId>
+            <version>${spring.boot.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+            <version>${flyway.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-database-postgresql</artifactId>
+            <version>${flyway.version}</version>
+            <scope>runtime</scope>
         </dependency>
 
         <dependency>

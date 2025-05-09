@@ -25,7 +25,6 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
-@EnableScheduling
 public class SecurityConfig {
     private static final String REALM_NAME = "blpslab1";
 

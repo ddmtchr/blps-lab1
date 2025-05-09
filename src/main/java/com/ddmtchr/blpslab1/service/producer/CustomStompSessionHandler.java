@@ -1,5 +1,6 @@
 package com.ddmtchr.blpslab1.service.producer;
 
+import jakarta.websocket.DeploymentException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.lang.NonNull;
@@ -42,6 +43,9 @@ public class CustomStompSessionHandler extends StompSessionHandlerAdapter {
                 && reconnecting.compareAndSet(false, true)) {
             log.info("Connection to {} lost, trying to reconnect", url);
             reconnect();
+        } else if (exception.getCause() instanceof DeploymentException) {
+            log.info("Couldn't connect to {}, trying to reconnect", url);
+            Executors.newSingleThreadScheduledExecutor().schedule(this::reconnect, 5, TimeUnit.SECONDS);
         } else {
             log.error("Transport error: {}", exception.getMessage());
         }

@@ -6,6 +6,13 @@
       "destination": "checks.queue",
       "destination_type": "queue",
       "routing_key": "checks.queue"
+    },
+    {
+      "source": "blps-dlx",
+      "vhost": "/",
+      "destination": "dead.queue",
+      "destination_type": "queue",
+      "routing_key": "checks.queue"
     }
   ],
   "permissions": [
@@ -21,7 +28,21 @@
     {
       "name": "checks.queue",
       "vhost": "/",
-      "durable": true
+      "durable": true,
+      "arguments": {
+        "x-message-ttl": 60000,
+        "x-dead-letter-exchange": "blps-dlx"
+      }
+    },
+    {
+      "name": "dead.queue",
+      "vhost": "/",
+      "durable": true,
+      "arguments": {
+        "x-message-ttl": 60000,
+        "x-dead-letter-exchange": "blps-exchange",
+        "x-dead-letter-routing-key": "checks.queue"
+      }
     }
   ],
   "policies": [],
@@ -32,7 +53,13 @@
     {
       "name": "blps-exchange",
       "vhost": "/",
-      "type": "topic",
+      "type": "direct",
+      "durable": true
+    },
+    {
+      "name": "blps-dlx",
+      "vhost": "/",
+      "type": "direct",
       "durable": true
     }
   ],

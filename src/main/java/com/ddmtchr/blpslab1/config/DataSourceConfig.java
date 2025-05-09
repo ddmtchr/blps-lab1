@@ -2,6 +2,7 @@ package com.ddmtchr.blpslab1.config;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -64,6 +65,16 @@ public class DataSourceConfig {
         routingDataSource.setDefaultTargetDataSource(userDataSource);
 
         return routingDataSource;
+    }
+
+    @Bean
+    public DataSource quartzDataSource() {
+        return DataSourceBuilder.create()
+                .url("jdbc:postgresql://localhost:5432/blps")
+                .username("postgres")
+                .password("postgres")
+                .driverClassName("org.postgresql.Driver")
+                .build();
     }
 
     @Bean
