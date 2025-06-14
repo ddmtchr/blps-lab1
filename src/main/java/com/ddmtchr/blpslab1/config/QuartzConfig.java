@@ -1,6 +1,7 @@
 package com.ddmtchr.blpslab1.config;
 
 import com.ddmtchr.blpslab1.service.scheduling.BookingFinishJob;
+import com.ddmtchr.blpslab1.service.scheduling.CheckSendingJob;
 import com.ddmtchr.blpslab1.service.scheduling.PaymentTimeoutsJob;
 import com.ddmtchr.blpslab1.service.scheduling.PayoutsJob;
 import org.quartz.*;
@@ -72,6 +73,25 @@ public class QuartzConfig {
                 .withIdentity("bookingFinishTrigger")
                 .withSchedule(SimpleScheduleBuilder.simpleSchedule()
                         .withIntervalInMinutes(10)
+                        .repeatForever())
+                .build();
+    }
+
+    @Bean
+    public JobDetail checkSendingJobDetail() {
+        return JobBuilder.newJob(CheckSendingJob.class)
+                .withIdentity("checkSendingJob")
+                .storeDurably()
+                .build();
+    }
+
+    @Bean
+    public Trigger checkSendingTrigger(JobDetail checkSendingJobDetail) {
+        return TriggerBuilder.newTrigger()
+                .forJob(checkSendingJobDetail)
+                .withIdentity("checkSendingTrigger")
+                .withSchedule(SimpleScheduleBuilder.simpleSchedule()
+                        .withIntervalInSeconds(20)
                         .repeatForever())
                 .build();
     }

@@ -16,6 +16,8 @@ import java.time.LocalDate;
 @ToString
 public class CheckDto {
 
+    private Long bookingId;
+
     private String guest;
     private String estate;
     private Long amount;

@@ -33,8 +33,7 @@ public class BookingService {
     private final BookingRepository repository;
     private final EstateRepository estateRepository;
     private final UserRepository userRepository;
-
-    private final StompMessageSender messageSender;
+    private final CheckMessageService checkMessageService;
 
     @Transactional
     public BookingResponseDto addBooking(BookingRequestDto dto) {
@@ -150,7 +149,8 @@ public class BookingService {
         this.repository.save(booking);
         this.userRepository.save(guest);
 
-        this.messageSender.sendMessage(new CheckDto(
+        this.checkMessageService.save(new CheckDto(
+                booking.getId(),
                 guest.getUsername(),
                 booking.getEstate().getName(),
                 amountToPay,
